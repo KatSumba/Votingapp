@@ -1,0 +1,59 @@
+/* Success notification */
+.toast-success {
+    color: #155724 !important; /* Dark green text color */
+    background-color: #d4edda !important; /* Light green background color */
+}
+
+/* Info notification */
+.toast-info {
+    color: #17a2b8 !important; /* Dark blue text color */
+    background-color: #d1ecf1 !important; /* Light blue background color */
+}
+
+/* Warning notification */
+.toast-warning {
+    color: #856404 !important; /* Dark yellow text color */
+    background-color: #ffeeba !important; /* Light yellow background color */
+}
+
+/* Error notification */
+.toast-error {
+    color: #721c24 !important; /* Dark red text color */
+    background-color: #f8d7da !important; /* Light red background color */
+}
+
+/* profile edit form */
+
+.bg-secondary-soft {
+    background-color: rgba(208, 212, 217, 0.1) !important;
+}
+.file-upload .square {
+    height: 250px;
+    width: 250px;
+    margin: auto;
+    vertical-align: middle;
+    border: 1px solid #e5dfe4;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+/* Application Datatable styling */
+
+#application-table {
+    font-size: 14px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+@media (max-width: 768px) {
+    #application-table {
+        font-size: 12px;
+        display: block; /* Force columns to stack */
+    }
+}
+
+
+#application-table {
+    max-width: 100%;
+    overflow-x: auto; /* Add a horizontal scrollbar */
+}
+
