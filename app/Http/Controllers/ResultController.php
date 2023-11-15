@@ -13,6 +13,12 @@ class ResultController extends Controller
     public function index()
     {
 
+        $votesExist = Vote::exists();
+
+        // If no votes exist, return a view with a message
+        if (!$votesExist) {
+            return view('auth.no-data');
+        }
         // $data = Vote::all();
         // $counts = DB::table('votes')->select('candidate', DB::raw('count(*) as count'))->groupBy('candidate')->get();
 

@@ -179,7 +179,10 @@
                         <span>Results</span>
                     </a>
                 </li>
+
+                
             @endif
+           
             <!-- Heading -->
             <!-- <div class="sidebar-heading">
                 Interface
@@ -242,6 +245,10 @@
                                 <a class="dropdown-item" href="/profile">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
+                                </a>
+                                <a class="dropdown-item " href="/settings">
+                                    <i class="fa fa-cog fa-sm fa-fw mr-2 text-gray-400" aria-hidden="true"></i>    
+                                    <span>Settings</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" 

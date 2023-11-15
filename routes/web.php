@@ -40,6 +40,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('editprofile', [ProfileController::class, 'update'])->name('profile.update');
     
     Route::get('/results', [ResultController::class, 'index'])->name('candidates.result');
+    Route::get('/settings', function () {
+        return view('auth.settings');
+    })->name('auth.settings');
 
 });
 Route::group(['middleware' => ['auth', 'admin']], function () {   //check if user is logged in else display login page

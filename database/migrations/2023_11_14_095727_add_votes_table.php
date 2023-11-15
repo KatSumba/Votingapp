@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('voter');
             $table->string('candidate');
+            $table->string('FirstName');
+            $table->string('LastName');
+            $table->string('position');
             $table->timestamps();
         });
     }

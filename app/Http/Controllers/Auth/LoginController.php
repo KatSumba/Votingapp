@@ -5,36 +5,38 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Notifications\OtpNotification;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Responses\LoginResponse as FortifyLoginResponse;
+
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // Check if the user has 2FA enabled
+        if ($user->two_factor_secret) {
+            // If 2FA is enabled, generate and send OTP
+            $user->notify(new OtpNotification);
+            // return redirect()->route('two-factor.login');
+            return view('auth.two-factor-challenge');
+            // return app(LoginResponse::class);
+            // return response()->json(['message' => 'Two-factor challenge initiated']);
+
+        }
+        
+        // Continue with the default authentication logic
+        return redirect()->intended($this->redirectPath());
     }
 }
