@@ -10,16 +10,16 @@
         
     </div>
     <!-- Page body -->
+    <a href="{{ url('/export-pdf') }}" class="btn btn-secondary m-4">
+        <i class="fa fa-download" aria-hidden="true"></i> Export to PDF
+    </a>
     <div class="row d-flex justify-content-center align-items-center h-100">
-        
+    
         @foreach($chartsData as $chartData)
         <div class="card shadow m-4 col-md-5">
             <div style="width: 80%; margin: auto;">
                 <canvas id="{{ $chartData['position'] }}Chart"></canvas>
 
-                <button onclick="exportToPDF('{{ $chartData['position'] }}', @json($chartData))" class="btn btn-link m-4">
-                    <i class="fa fa-file" aria-hidden="true"></i> Export
-                </button>
             </div>
         </div>
 
@@ -38,6 +38,8 @@
                             label: '{{ $chartData['position'] }}',
                             data: votes,
                             backgroundColor: getRandomColorArray(candidates.length),
+                            barPercentage: 1,
+                            barThickness: 50,
                         }],
                     };
 
@@ -45,6 +47,12 @@
                         type: 'bar',
                         data: chartData,
                         options: {
+                            layout: {
+                                padding: {
+                                    top: 20, // Adjust the top padding value as needed
+                                    bottom:20,
+                                },
+                            },
                             scales: {
                                 y: {
                                     beginAtZero: true,
@@ -54,6 +62,9 @@
                                     },
                                 },
                             },
+                            maintainAspectRatio: false, // Disable the default aspect ratio
+            aspectRatio: 1, // Set the aspect ratio to control the height
+
                         },
                     });
 
@@ -73,21 +84,11 @@
                         }
                         return color;
                     }
-                    function exportToPDF(position, chartData) {
-                        var pdf = new jsPDF();
-                        var canvas = document.getElementById('{{ $chartData['position'] }}Chart');
-
-                        // Convert the canvas to an image
-                        var dataURL = canvas.toDataURL('image/png');
-
-                        // Add the image to the PDF
-                        pdf.addImage(dataURL, 'PNG', 10, 10, 180, 100);
-
-                        // Save or download the PDF
-                        pdf.save(position + '_chart_export.pdf');
-                    }
+                    
                     
                 });
+            //     
+
             </script>
         @endforeach
 

@@ -17,6 +17,12 @@ class BallotController extends Controller
      */
     public function index()
     {
+        $appExist = Application::where('ApplicationStatus', 'approved')->exists();
+
+        // If no Approved application exist, return a view with a message
+        if (!$appExist) {
+            return view('auth.no-data');
+        }
         $applications=Application::where('ApplicationStatus', 'approved')->get();
         //$positions= Positions::all();
         $positions = Application::where('ApplicationStatus', 'approved')
@@ -59,12 +65,18 @@ class BallotController extends Controller
                 // Extract the vote ID and save it to the database
                 $voteId = $value;
                 $data= Application::where('slug',$voteId)
+                ->select('FacultyID','Position')
                 ->first();
-
+                $cdata=User::where('FacultyID',$data['FacultyID'])
+                ->select('FacultyID', 'FirstName', 'LastName')
+                ->first();
+                
                 // Save the data to the Vote model or your relevant model
                 Vote::create([
                     'voter' => $userId,
-                    'candidate' => $voteId,
+                    'candidate' => $cdata['FacultyID'],
+                    'FirstName' => $cdata['FirstName'],
+                    'LastName' => $cdata['LastName'],
                     'position' =>$data['Position'],
                 ]);
             }

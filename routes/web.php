@@ -31,6 +31,8 @@ Route::get('/index', function () {
 Route::get('/403-error', function () {
     return view('error.403');
 })->name('error.403');
+
+
 Auth::routes();
 
 
@@ -43,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/settings', function () {
         return view('auth.settings');
     })->name('auth.settings');
+    Route::get('/export-pdf', [ResultController::class, 'exportVotesDataToPDF']);
 
 });
 Route::group(['middleware' => ['auth', 'admin']], function () {   //check if user is logged in else display login page
