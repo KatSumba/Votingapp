@@ -15,13 +15,13 @@ class StudentMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if(auth()->check()&& auth()->user()->role===0){
-        //     return $next($request);
+        if(auth()->check()&& auth()->user()->role==='0'){
+            return $next($request);
 
-        // }
-        // return redirect()->route('error.403');
+        }
+        return redirect()->route('error.403');
 
-                    return $next($request);
+                    // return $next($request);
 
     }
 }
